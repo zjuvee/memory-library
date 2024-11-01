@@ -7,36 +7,6 @@ HANDLE hDevice;
 extern "C" NTSTATUS ZwReadVirtualMemory(HANDLE ProcessHandle, PVOID BaseAddress, PVOID Buffer, ULONG NumberOfBytesToRead, PULONG NumberOfBytesReaded);
 extern "C" NTSTATUS ZwWriteVirtualMemory(HANDLE ProcessHandle, PVOID BaseAddress, LPCVOID Buffer, SIZE_T BufferSize, PSIZE_T NumberOfBytesWritten);
 
-// contactar con el kernel para leer la memoria
-void memory::ReadMemory(int pid, PVOID address, SIZE_T size, BYTE* buffer) const {
-    MEMORY_READ_REQUEST request = { pid, address, size };
-    if (!DeviceIoControl(hDevice, IOCTL_READ_MEMORY, &request, sizeof(request), buffer, size, NULL, NULL)) {
-        // error msg
-    }
-}
-
-// contactar con el kernel para escribir la memoria
-void memory::WriteMemory(int pid, PVOID address, PVOID data, SIZE_T size) const {
-    MEMORY_WRITE_REQUEST request = { pid, address, data, size };
-    DWORD bytesWritten;
-    if (!DeviceIoControl(hDevice, IOCTL_WRITE_MEMORY, &request, sizeof(request), NULL, 0, &bytesWritten, NULL)) {
-        // error msg
-    }
-}
-
-void memory::OpenDevice() {
-    hDevice = CreateFile("\\\\.\\kerneldriver", GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
-    if (hDevice == INVALID_HANDLE_VALUE) {
-        CloseHandle(hDevice);
-    }
-}
-
-void memory::CloseDevice() {
-    if (hDevice != INVALID_HANDLE_VALUE) {
-        CloseHandle(hDevice);
-    }
-}
-
 // obtener el pid de un proceso por el nombre
 DWORD memory::get_pid(const char* processName)
 {

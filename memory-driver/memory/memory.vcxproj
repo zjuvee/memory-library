@@ -128,11 +128,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="driver\entry.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="memory.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="driver\byte.h" />
+    <ClInclude Include="driver\driver.h" />
+    <ClInclude Include="driver\entry.h" />
+    <ClInclude Include="kdm\intel_driver.hpp" />
+    <ClInclude Include="kdm\intel_driver_resource.hpp" />
+    <ClInclude Include="kdm\kdmapper.hpp" />
+    <ClInclude Include="kdm\nt.hpp" />
+    <ClInclude Include="kdm\portable_executable.hpp" />
+    <ClInclude Include="kdm\service.hpp" />
+    <ClInclude Include="kdm\utils.hpp" />
     <ClInclude Include="memory.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="kdm\kdmapper_lib-Release.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
